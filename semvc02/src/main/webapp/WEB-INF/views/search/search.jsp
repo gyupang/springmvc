@@ -26,6 +26,9 @@ $(function() {
   }
 });
 </script>
-
+<form action="searchOk.jsp"  name="form2" method="post">
+<input type="text" />
+<input type="submit" />
+</form>
 </body>
 </html>

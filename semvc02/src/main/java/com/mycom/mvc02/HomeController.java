@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,18 +62,25 @@ public class HomeController {
 		return mv;
 	}
 
-//	@RequestMapping("/search/search.do")
-//	public String search(HttpServletRequest request, Model model) {
-//		String search = request.getParameter("search");
-//		model.addAttribute("search", search);
-//		return "search/search";
-//	}
 	@RequestMapping("/search/search.do")
-	public String search(@RequestParam("search") String search, Model model) {
+	public String search(HttpServletRequest request, Model model) {
+		String search = request.getParameter("search");
 		model.addAttribute("search", search);
 		return "search/search";
 	}
-	
+//	@RequestMapping("/search/search.do")
+//	public String search(@RequestParam("search") String search, Model model) {
+//		model.addAttribute("search", search);
+//		return "search/search";
+//	}
+//	
+
+	@RequestMapping(method = RequestMethod.POST, value = "/searchOk")
+	public String searchOk(HttpServletRequest request, Model model) {
+		String search = request.getParameter("search");
+		model.addAttribute("search", search);
+		return "searchOk";
+	}
 //	@RequestMapping("/register/registerOk.do")
 //	public String registerOk(@RequestParam("userId") String userId,
 //	                         @RequestParam("userPass") String userPass,
@@ -119,6 +127,43 @@ public class HomeController {
 	@RequestMapping("/member/register.do")
 	public String register() {
 		return "member/register";
+	}
+
+	@RequestMapping("/0601/member")
+	public String member() {
+		return "0601/member";
+	}
+
+// 받는 1번방법
+//	@RequestMapping("/0601/memberok")
+//	public String memberok(HttpServletRequest request, Model model) {
+//		Member mb = new Member();
+//		mb.setUserid(request.getParameter("userid"));
+//		mb.setUserpass(request.getParameter("userpass"));
+//		mb.setUsernum(request.getParameter("usernum"));
+//		model.addAttribute("mem", mb);
+//		return "0601/memberok";
+//	}
+
+	// 받는 2번방법
+//	@RequestMapping("/0601/memberok")
+//	public String memberok(
+//@RequestParam("userid") String userid,
+//@RequestParam("userpass") String userpass,
+//			@RequestParam("usernum") String usernum, Model model) {
+//		Member mb = new Member();
+//		mb.setUserid(userid);
+//		mb.setUserpass(userpass);
+//		mb.setUsernum(usernum);
+//		model.addAttribute("mem", mb);
+//		return "0601/memberok";
+//	}
+	
+	// 받는 3번방법
+	@RequestMapping("/0601/memberok")
+	public String memberok(@ModelAttribute("mem") Member member) {
+//변수 이름 바꾸려면 @ModelAttribute
+		return "0601/memberok";
 	}
 
 }
